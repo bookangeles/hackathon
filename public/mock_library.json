@@ -1,6 +1,7 @@
 {
-  "books": {
-    "333": {
+  "books": [
+    {
+      "id": 333,
       "owner": "forivan@ya.ru",
       "fileName": "Impact Mapping",
       "fileFormat": "pdf",
@@ -11,17 +12,19 @@
       "note": "proto card",
       "createdAt": 1455992953344
     }
-  },
-  "tags": {
-    "32234": {
+  ],
+  "tags": [
+    {
+      "id": 32234,
       "owner": 333,
       "caption": "work",
       "color": "green"
     },
-    "32235": {
+    {
+      "id": 32235,
       "owner": 333,
       "caption": "product_management",
       "color": "green"
     }
-  }
+  ]
 }
