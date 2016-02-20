@@ -17,7 +17,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "books": {
+      "type": "hasMany",
+      "model": "book",
+      "foreignKey": "ownerId"
+    }
+  },
   "acls": [],
   "methods": {}
 }
