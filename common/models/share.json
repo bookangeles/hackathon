@@ -15,8 +15,8 @@
       "required": true
     },
     "value": {
-      "type": "string",
-      "required": true
+      "type": "number",
+      "required": false
     }
   },
   "validations": [],
