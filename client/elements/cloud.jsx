@@ -2,7 +2,8 @@ require('./cloud.styl');
 
 import Tag from './tag.jsx';
 
-export default React.createClass({
+const TagCloud = React.createClass({
+  mixins: [Bem],
   getDefaultProps() {
     return {
       tags: [],
@@ -12,10 +13,12 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="tagCloud">
+      <div className={this.b_()}>
         {this.props.tags && _.map(this.props.tags, (tag, key) =>
           <Tag key={key} modifier={this.props.modifier} caption={tag.caption} />)}
       </div>
     );
   },
 });
+
+export default TagCloud;

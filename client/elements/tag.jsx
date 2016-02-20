@@ -1,6 +1,7 @@
 require('./tag.styl');
 
-export default React.createClass({
+const Tag = React.createClass({
+  mixins: [Bem],
   getDefaultProps() {
     return {
       caption: '',
@@ -10,9 +11,11 @@ export default React.createClass({
 
   render() {
     return (
-      <div className={'bookTag' + (this.props.modifier ? ` bookTag_${this.props.modifier}` : '')}>
+      <div className={this.b_(`bookTag_${this.props.modifier || 'default'}`)}>
         {this.props.caption}
       </div>
     );
   },
 });
+
+export default Tag;
