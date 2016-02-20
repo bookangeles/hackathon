@@ -3,7 +3,8 @@ require('./booklist.styl');
 import BookItem from './bookitem.jsx';
 import Cloud from '../elements/cloud.jsx';
 
-export default React.createClass({
+let bookList = React.createClass({
+  mixins: [Bem],
   getDefaultProps() {
     return {
       books: [],
@@ -13,10 +14,12 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="bookList">
+      <div className={this.b_()}>
         {_.map(this.props.books, (book, key) => <BookItem key={key}
           {...book} tags={_.pick(this.props.tags, book.tags)}/>)}
       </div>
     );
   },
 });
+
+export default bookList;

@@ -3,5 +3,6 @@
   "React": "react",
   "ReactDOM": "react-dom",
   "PureRenderMixin": "react-addons-pure-render-mixin",
+  "Bem": "mixins/bem",
   "_": "lodash"
 }
