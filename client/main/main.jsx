@@ -22,5 +22,3 @@ ReactDOM.render(
 )
 
 module.exports = CanonicalBlock;
-
-ReactDOM.render(<CanonicalBlock />, document.getElementById('content'));
