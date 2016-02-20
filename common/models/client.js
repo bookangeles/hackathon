@@ -1,39 +1,28 @@
-var path = require('path')
+const 
+  path = require('path'),
+  _ = require('lodash')
 
 module.exports = function(Client) {
-
-  Client.disableRemoteMethod('upsert', true)
-  Client.disableRemoteMethod('updateAll', true)
-  Client.disableRemoteMethod('updateAttributes', false)
-  Client.disableRemoteMethod('find', true)
-  Client.disableRemoteMethod('findById', true)
-  Client.disableRemoteMethod('findOne', true)
-  Client.disableRemoteMethod('deleteById', true)
-  Client.disableRemoteMethod('confirm', true)
-  Client.disableRemoteMethod('count', true)
-  Client.disableRemoteMethod('exists', true)
-  Client.disableRemoteMethod('resetPassword', true)
-
   Client.beforeRemote('create', function(context, unused, next) {
     if (~['bezengi@gmail.com'
         , 'boris362@yandex.ru'
         , 'kotovivan@gmail.com'
         , 'normalno@gmail.com'].indexOf(_.get(context.req.body.email)))
       return next()
-
-    Client.app.models.Shares.find({
+    
+    Client.app.models.Share.find({
         where: {
-          recipient: _.get(context.req.body.email)
-        },
-        limit: 1
-      }, (err, accounts) =>
+          recipient: _.get(context, 'req.body.email')
+        }
+      }, (err, accounts) => {
         next(err
             ? err
             : !accounts.length
-              ? new Error('Forbidden', 403, 'Access denied')
-              : null))
+              ? new Error('Forbidden', 'Access denied, вас тут не ждут :(', 403)
+              : null)
+        })
   })
-   
+
   Client.afterRemote('create', function(context, user, next) {
     user.verify({
       type: 'email',

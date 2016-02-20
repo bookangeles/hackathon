@@ -3,16 +3,16 @@ module.exports = function(app) {
   var Share = app.models.Share;
 
   Client.create([
-    {displayName: 'John', email: 'j@j.com', password: 'sesame'}
+    {displayName: 'John', email: 'fj@j.com', password: 'sesame'}
   ], function (err, res) {
     if (err) return console.log('fail')
     console.log('user created', res)
   })
 
   Share.create([
-    {owner: 'John', email: 'j@j.com', password: 'sesame'}
+    {owner: 1, recipient: 'j@j.com', type: 'book', value: 1}
   ], function (err, res) {
     if (err) return console.log('fail')
-    console.log('user created', res)
+    console.log('Sahre created', res)
   })
 };
