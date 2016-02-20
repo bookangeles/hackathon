@@ -18,4 +18,4 @@ render((
       <Route path="/profile" component={Profile}/>
     </Route>
   </Router>
-), document.getElementById('app'))
+), document.getElementById('spa'))
