@@ -6,6 +6,19 @@ var app = module.exports = loopback();
 app.set('views', './server/views'); 
 app.set('view engine', 'jade');
 
+var isProduction = process.env.NODE_ENV === 'production';
+
+if (!isProduction)
+  app.use(function(req, res, next) {
+    var path = req.path.replace(/\/{2,}/g, '/');
+    if (~path.indexOf('/compiled')) {
+      return res.redirect('//127.0.0.1:3001' + path);
+    }
+    next();
+  })
+
+
+
 app.start = function() {
   // start the web server
   return app.listen(function() {

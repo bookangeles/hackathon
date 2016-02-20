@@ -1,7 +1,6 @@
 require('./main.styl');
 
-let
-CanonicalBlock = React.createClass({
+const CanonicalBlock = React.createClass({
   getDefaultProps() {
     return {
       data: []
@@ -11,11 +10,17 @@ CanonicalBlock = React.createClass({
   render() {
     return (
       <div className="wrapper">
-        I'm react component
+        I'm react component sdfsd
       </div>
     );
   }
 });
+
+ReactDOM.render(
+  <CanonicalBlock />,
+  document.getElementById('spa')
+)
+
 module.exports = CanonicalBlock;
 
 ReactDOM.render(<CanonicalBlock />, document.getElementById('content'));
