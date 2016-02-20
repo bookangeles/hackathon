@@ -1,5 +1,6 @@
 require('./main.styl');
 
+let
 CanonicalBlock = React.createClass({
   getDefaultProps() {
     return {
@@ -16,3 +17,5 @@ CanonicalBlock = React.createClass({
   }
 });
 module.exports = CanonicalBlock;
+
+ReactDOM.render(<CanonicalBlock />, document.getElementById('content'));
