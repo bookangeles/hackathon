@@ -8,7 +8,7 @@ import Nav from '../nav/nav.jsx'
 import Profile from '../profile/profile.jsx'
 import Storage from '../storage/storage.jsx'
 
-render((
+ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={Nav}>
       <IndexRoute component={Library}/>
