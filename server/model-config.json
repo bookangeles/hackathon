@@ -21,6 +21,9 @@
     "dataSource": "db",
     "public": false
   },
+  "Email": {
+    "dataSource": "Email"
+  },
   "ACL": {
     "dataSource": "db",
     "public": false

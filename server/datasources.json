@@ -3,8 +3,23 @@
     "name": "db",
     "connector": "memory"
   },
-  "Mail": {
-    "name": "Mail",
-    "connector": "mail"
+  "Email": {
+    "name": "Email",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "smtp",
+        "host": "smtp.gmail.com",
+        "secure": true,
+        "port": 465,
+        "tls": {
+          "rejectUnauthorized": false
+        },
+        "auth": {
+          "user": "bookangeles.com@gmail.com",
+          "pass": "bookangelespassword"
+        }
+      }
+    ]
   }
 }
