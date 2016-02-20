@@ -5,14 +5,14 @@ var
 
 module.exports = function(params) {
   var
-    entries = _.map(params.entry, function(page, key) {
-      return { [key]: [
-        'webpack-dev-server/client?http://localhost:3001',
+    entries = Object.keys(params.entry).reduce(function(entries, page) {
+      entries[page] = [
+        'webpack-dev-server/client?http://localhost:8002',
         'webpack/hot/only-dev-server',
-        page,
-      ] };
-    }),
-    entries = params.entry,
+        params.entry[page],
+      ];
+      return entries;
+    }, {}),
     loaders = [].concat(params.module.loaders);
 
   _.findWhere(loaders, { name: 'clientjs' }).loaders.unshift('react-hot');
