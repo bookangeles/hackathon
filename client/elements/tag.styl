@@ -1,18 +1,23 @@
+$h = 17px
 .bookTag
   display inline-block
   font-size 11px
-  height 17px
+  height $h
+  line-height $h
   padding 0 5px
   margin-right 3px
   background-color wheat
   border-radius 10px
-  max-width 100px
   color #606060
-  overflow hidden
-  text-overflow ellipsis
-  white-space nowrap
+  min-width 50px
 
   &_inCard
     max-width 30px
+    background-color white
+    border 1px solid #303030
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+
   &_important
     color red

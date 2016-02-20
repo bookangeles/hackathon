@@ -1,17 +1,6 @@
 require('./nav.styl');
 
-import { Link } from 'react-router'
-import Cloud from '../elements/cloud.jsx'
-
-const mockData = {
-  loadedTags: [{
-    id: 1,
-    caption: 'work'
-  }, {
-    id: 2,
-    caption: 'fun'
-  }]
-};
+import { Link } from 'react-router';
 
 export default React.createClass({
   render() {
@@ -23,8 +12,7 @@ export default React.createClass({
           <li><Link to="/profile">Profile</Link></li>
         </ul>
         {this.props.children}
-        <Cloud tags={mockData.loadedTags} />
       </nav>
-    )
-  }
-})
+    );
+  },
+});

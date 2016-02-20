@@ -1,0 +1,27 @@
+{
+  "books": {
+    "333": {
+      "owner": "forivan@ya.ru",
+      "fileName": "Impact Mapping",
+      "fileFormat": "pdf",
+      "fileUrl": "none",
+      "title": "Impact Mapping: Making a big impact with software products and projets",
+      "author": "Gijko Adzic",
+      "tags": [ 32234, 32235 ],
+      "note": "proto card",
+      "createdAt": 1455992953344
+    }
+  },
+  "tags": {
+    "32234": {
+      "owner": 333,
+      "caption": "work",
+      "color": "green"
+    },
+    "32235": {
+      "owner": 333,
+      "caption": "product_management",
+      "color": "green"
+    }
+  }
+}
