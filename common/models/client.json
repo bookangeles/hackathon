@@ -20,7 +20,7 @@
   "relations": {
     "books": {
       "type": "hasMany",
-      "model": "book",
+      "model": "Book",
       "foreignKey": "owner"
     }
   },

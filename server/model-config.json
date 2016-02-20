@@ -43,9 +43,9 @@
       "emailVerificationRequired": false
     }
   },
-  "book": {
+  "Book": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "Share": {
     "dataSource": "db",
