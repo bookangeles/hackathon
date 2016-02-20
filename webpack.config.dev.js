@@ -7,7 +7,7 @@ module.exports = function(params) {
   var
     entries = Object.keys(params.entry).reduce(function(entries, page) {
       entries[page] = [
-        'webpack-dev-server/client?http://localhost:8002',
+        'webpack-dev-server/client?http://localhost:3001',
         'webpack/hot/only-dev-server',
         params.entry[page],
       ];
