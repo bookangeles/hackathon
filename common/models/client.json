@@ -27,6 +27,11 @@
       "type": "hasMany",
       "model": "Book",
       "foreignKey": "owner"
+    },
+    "tags": {
+      "type": "hasMany",
+      "model": "Tag",
+      "foreignKey": "owner"
     }
   },
   "acls": [],
