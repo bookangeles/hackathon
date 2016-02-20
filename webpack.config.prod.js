@@ -20,7 +20,7 @@ module.exports = function(params) {
         output: {
           path: __dirname + '/public/compiled/',
           filename: '[name].js',
-          publicPath: '/public/compiled/'
+          publicPath: '/compiled/'
         },
         plugins: [
           new webpack.optimize.UglifyJsPlugin({

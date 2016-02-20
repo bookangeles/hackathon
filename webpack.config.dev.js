@@ -5,13 +5,14 @@ var
 
 module.exports = function(params) {
   var
-    entries = _.map(params.entry, function(page) {
-      return [
-        'webpack-dev-server/client?http://localhost:3003',
+    entries = _.map(params.entry, function(page, key) {
+      return { [key]: [
+        'webpack-dev-server/client?http://localhost:3001',
         'webpack/hot/only-dev-server',
         page,
-      ];
+      ] };
     }),
+    entries = params.entry,
     loaders = [].concat(params.module.loaders);
 
   _.findWhere(loaders, { name: 'clientjs' }).loaders.unshift('react-hot');
@@ -23,7 +24,7 @@ module.exports = function(params) {
     entry: entries,
     debug: true,
     output: _.extend(params.output, {
-      publicPath: 'http://localhost:3003' + params.output.publicPath,
+      publicPath: 'http://localhost:3001' + params.output.publicPath,
     }),
     module: {
       loaders: loaders,
@@ -32,10 +33,10 @@ module.exports = function(params) {
       watchOptions: {
         aggregateTimeout: 200,
       },
-      publicPath: 'http://localhost:3003/public/compiled',
+      publicPath: 'http://localhost:3001/compiled',
       contentBase: 'http://localhost',
       hot: true,
-      port: 3003,
+      port: 3001,
       stats: {
         hash: false,
         cached: false,

@@ -13,7 +13,8 @@
     "start": "node .",
     "pretest": "jshint .",
     "posttest": "nsp check",
-    "build": "NODE_ENV=production webpack",
+    "try": "NODE_ENV=development webpack",
+    "build": "webpack",
     "webpack": "rm -fr ./public/compiled && webpack-dev-server"
   },
   "dependencies": {

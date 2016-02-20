@@ -15,3 +15,4 @@ CanonicalBlock = React.createClass({
     );
   }
 });
+module.exports = CanonicalBlock;
