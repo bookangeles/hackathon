@@ -50,5 +50,9 @@
   "Share": {
     "dataSource": "db",
     "public": false
+  },
+  "Tag": {
+    "dataSource": "db",
+    "public": false
   }
 }
