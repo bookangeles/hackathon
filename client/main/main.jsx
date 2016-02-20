@@ -1,6 +1,5 @@
 require('./main.styl');
 
-import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import Book from '../book/book.jsx'
