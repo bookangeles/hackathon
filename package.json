@@ -50,7 +50,7 @@
     "react-addons-css-transition-group": "0.14.0",
     "react-addons-pure-render-mixin": "0.14.0",
     "react-dom": "0.14.0",
-    "react-router": "1.0.0-rc3",
+    "react-router": "^2.0.0",
     "serve-favicon": "^2.0.1",
     "style-loader": "0.13.0",
     "stylus": "~0.53.0",
