@@ -42,5 +42,9 @@
     "options": {
       "emailVerificationRequired": true
     }
+  },
+  "book": {
+    "dataSource": "db",
+    "public": true
   }
 }
