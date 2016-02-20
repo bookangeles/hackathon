@@ -7,6 +7,7 @@ import Nav from '../nav/nav.jsx';
 import Profile from '../profile/profile.jsx';
 import Storage from '../storage/storage.jsx';
 import Dummy from '../elements/onair.jsx';
+import BookForm from '../elements/book-form.jsx'
 
 ReactDOM.render((
   <Router history={browserHistory}>
@@ -19,6 +20,7 @@ ReactDOM.render((
       <Route path="/book/:id" name="book item" component={Dummy} />
       <Route path="/profile" component={Profile} />
       <Route path="/connections" name="shares page" component={Dummy} />
+      <Route path="/form" component={BookForm}/>
     </Route>
   </Router>
 ), document.getElementById('spa'));
