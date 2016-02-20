@@ -46,5 +46,9 @@
   "book": {
     "dataSource": "db",
     "public": true
+  },
+  "Share": {
+    "dataSource": "db",
+    "public": false
   }
 }
