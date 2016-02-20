@@ -14,7 +14,9 @@
   "scripts": {
     "start": "node .",
     "pretest": "jshint .",
-    "posttest": "nsp check"
+    "posttest": "nsp check",
+    "build": "NODE_ENV=production webpack",
+    "webpack": "rm -fr ./public/compiled && webpack-dev-server"
   },
   "dependencies": {
     "compression": "^1.0.3",

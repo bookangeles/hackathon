@@ -1,0 +1,7 @@
+{
+  "$": "jquery",
+  "React": "react",
+  "ReactDOM": "react-dom",
+  "PureRenderMixin": "react-addons-pure-render-mixin",
+  "_": "lodash"
+}
