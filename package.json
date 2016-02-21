@@ -58,6 +58,7 @@
     "react-dom": "0.14.0",
     "react-router": "^2.0.0",
     "react-tap-event-plugin": "^0.2.2",
+    "react-xhr-uploader": "^0.2.1",
     "request": "2.69.0",
     "serve-favicon": "^2.0.1",
     "style-loader": "0.13.0",
