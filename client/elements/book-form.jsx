@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import XHRUploader from 'react-xhr-uploader';
+import { browserHistory } from 'react-router';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -54,6 +55,7 @@ class MyUploader extends XHRUploader {
 
 export default React.createClass({
   getInitialState() {
+    this.data = {};
     return {
       disabled: true
     };
@@ -67,16 +69,20 @@ export default React.createClass({
     });
   },
 
+  handleInputChange(attr, e) { this.data[attr] = e.target.value; },
+  handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
+
   handleSubmit(e, id, oe) {
     e.preventDefault();
     $.ajax({
       url: e.target.action,
       method: e.target.method,
-      data: $(e.target).serialize(),
-      success: function(data) {
-        console.log(arguments);
+      data: this.data,
+      success: (data, status) => {
+        console.log(data, status);
+        browserHistory.push('/');
       },
-      error: function(error) {
+      error: (error) => {
         console.error(error);
       }
     });
@@ -95,10 +101,11 @@ export default React.createClass({
           method="post"
           onSubmit={this.handleSubmit}
           >
-          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName}/><br/>
-          <TextField name="author" floatingLabelText="Book author"/><br/>
-          <TextField name="cover" floatingLabelText="Book cover link"/><br/>
-          <TextField name="note" floatingLabelText="Note" multiLine/><br/>
+          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={_.partial(this.handleInputChange, "title")}/><br/>
+          <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
+          <TextField name="cover" floatingLabelText="Book cover link" onChange={_.partial(this.handleInputChange, "cover")}/><br/>
+          <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
+          <TextField name="tags" floatingLabelText="Tags" onChange={this.handleTagsChange}/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>

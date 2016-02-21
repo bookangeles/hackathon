@@ -6,7 +6,7 @@ const makeKeys = (data = []) =>
 
 export default React.createClass({
   getInitialState() {
-    $.getJSON('/mock_library.json', this.onResponse);
+    $.getJSON('/bapi/tags', this.onTagsLoad);
 
     return {
       books: false,
@@ -14,10 +14,11 @@ export default React.createClass({
     };
   },
 
-  onResponse(data) {
-    this.setState({
-      books: makeKeys(_.get(data, 'books')),
-      tags: makeKeys(_.get(data, 'tags')),
+  onTagsLoad(data) {
+    var tags = data;
+    $.getJSON('/bapi/books', (data) => {
+      var books = data;
+      this.setState({ books, tags });
     });
   },
 
