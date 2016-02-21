@@ -68,10 +68,7 @@ export default React.createClass({
     });
   },
 
-  handleTitleChange(e) { this.data.title = e.target.value; },
-  handleAuthorChange(e) { this.data.author = e.target.value; },
-  handleCoverChange(e) { this.data.cover = e.target.value; },
-  handleNoteChange(e) { this.data.note = e.target.value; },
+  handleInputChange(e, attr) { this.data[attr] = e.target.value; },
   handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
 
   handleSubmit(e, id, oe) {
@@ -102,10 +99,10 @@ export default React.createClass({
           method="post"
           onSubmit={this.handleSubmit}
           >
-          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={this.handleTitleChange}/><br/>
-          <TextField name="author" floatingLabelText="Book author" onChange={this.handleAuthorChange}/><br/>
-          <TextField name="cover" floatingLabelText="Book cover link" onChange={this.handleCoverChange}/><br/>
-          <TextField name="note" floatingLabelText="Note" multiLine onChange={this.handleNoteChange}/><br/>
+          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={_.partial(this.handleInputChange, "title")}/><br/>
+          <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
+          <TextField name="cover" floatingLabelText="Book cover link" onChange={_.partial(this.handleInputChange, "cover")}/><br/>
+          <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
           <TextField name="tags" floatingLabelText="Tags" onChange={this.handleTagsChange}/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
