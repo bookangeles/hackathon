@@ -108,15 +108,34 @@ response: list of books
 payload:
 
 	{ 
-	  "access_token": "token"
+	  "access_token": "token",
 	  "book": file,
-	  "title": "..."
-	  "author": "..."
+	  "title": "...",
+	  "author": "...",
 	  "note": "..."
 	}
 
 response: added book object
 
+### Tag
 
+**fetch tags for user**
 
+`GET /bapi/tags?access_token=token[&tag=id]`
+
+response: list of tags
+
+**add tag**
+
+`POST /bapi/books`
+
+payload:
+
+  { 
+    "access_token": "token",
+    "caption": "...",
+    "color": "..."
+  }
+
+response: added book object
 
