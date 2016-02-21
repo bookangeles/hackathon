@@ -95,9 +95,15 @@ response:
 
 ### Book
 
-**fetch books for user**
+**fetch books for user, fetch books for user by tags**
 
 `GET /bapi/books?access_token=token[&tag=id]`
+
+response: list of books
+
+**search books**
+
+`GET /bapi/books/search?access_token=token&q=query_string`
 
 response: list of books
 
@@ -116,6 +122,12 @@ payload:
 	}
 
 response: added book object
+
+**download book**
+
+`GET /bapi/books/:id?access_token=token`
+
+response: book as an octet/stream
 
 **update book**
 
