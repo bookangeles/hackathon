@@ -54,6 +54,7 @@ class MyUploader extends XHRUploader {
 
 export default React.createClass({
   getInitialState() {
+    this.data = {};
     return {
       disabled: true
     };
@@ -67,12 +68,18 @@ export default React.createClass({
     });
   },
 
+  handleTitleChange(e) { this.data.title = e.target.value; },
+  handleAuthorChange(e) { this.data.author = e.target.value; },
+  handleCoverChange(e) { this.data.cover = e.target.value; },
+  handleNoteChange(e) { this.data.note = e.target.value; },
+  handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
+
   handleSubmit(e, id, oe) {
     e.preventDefault();
     $.ajax({
       url: e.target.action,
       method: e.target.method,
-      data: $(e.target).serialize(),
+      data: this.data,
       success: function(data) {
         console.log(arguments);
       },
@@ -95,10 +102,11 @@ export default React.createClass({
           method="post"
           onSubmit={this.handleSubmit}
           >
-          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName}/><br/>
-          <TextField name="author" floatingLabelText="Book author"/><br/>
-          <TextField name="cover" floatingLabelText="Book cover link"/><br/>
-          <TextField name="note" floatingLabelText="Note" multiLine/><br/>
+          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={this.handleTitleChange}/><br/>
+          <TextField name="author" floatingLabelText="Book author" onChange={this.handleAuthorChange}/><br/>
+          <TextField name="cover" floatingLabelText="Book cover link" onChange={this.handleCoverChange}/><br/>
+          <TextField name="note" floatingLabelText="Note" multiLine onChange={this.handleNoteChange}/><br/>
+          <TextField name="tags" floatingLabelText="Tags" onChange={this.handleTagsChange}/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
