@@ -117,6 +117,19 @@ payload:
 
 response: added book object
 
+**update book**
+
+`POST /bapi/books/:id`
+
+payload:
+
+  { 
+    "title": "...",
+    "author": "...",
+    "note": "...",
+    "tags": [ ... ]
+  }
+
 ### Tag
 
 **fetch tags for user**
