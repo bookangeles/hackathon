@@ -31,6 +31,12 @@ class MyUploader extends XHRUploader {
       };
 
       xhr.open('POST', this.props.url, true);
+
+      // Our code
+      // Get auth token from cookie and set to auth header
+      // TODO: set auth cookie on server side
+      xhr.setRequestHeader('X-Access-Token', _.get(document.cookie.match(/auth_token=(\w+)/), 1));
+
       xhr.send(formData);
       this.xhrs[file.index] = xhr;
 
@@ -46,10 +52,6 @@ class MyUploader extends XHRUploader {
   }
 }
 
-// TODO: setup correct access_token
-const accessToken = 'access_token=kGWNoGt8LNXlzYLAJnzdrFQ1rnnIERmGooE89JMM8LbQg6vJGuSdH2iUTBuRF5n3';
-const fileUploadUrl = `/bapi/books?${accessToken}`;
-
 export default React.createClass({
   getInitialState() {
     return {
@@ -60,7 +62,7 @@ export default React.createClass({
   onFileLoaded(response) {
     this.setState({
       disabled: false,
-      action: `/bapi/books/${response.id}?${accessToken}`,
+      action: `/bapi/books/${response.id}`,
       fileName: response.fileName
     });
   },
@@ -70,7 +72,7 @@ export default React.createClass({
     return (
       <div>
         <h2>Upload a new book</h2>
-        <MyUploader url={fileUploadUrl} fieldName="book" auto onFileLoaded={this.onFileLoaded} />
+        <MyUploader url="/bapi/books" fieldName="book" auto onFileLoaded={this.onFileLoaded} />
         <form
           className="bookForm"
           id="uploadForm"

@@ -3,6 +3,10 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 const mailRegexp = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
 
+// Get auth token from cookie and set to auth header
+// TODO: set auth cookie on server side
+$.ajaxSetup({ headers: { 'X-Access-Token': _.get(document.cookie.match(/auth_token=(\w+)/), 1) } });
+
 const AuthForm = React.createClass({
   mixins: [Bem],
   getInitialState() {
@@ -41,6 +45,7 @@ const AuthForm = React.createClass({
     if (this.validate)
       $.post('/api/clients/login', { email: this.state.email, password: this.state.pass })
       .done(data => {
+        document.cookie = `auth_token=${data.id}`;
         $.ajaxSetup({ headers: { 'X-Access-Token': data.id } });
       })
       .fail(data => {
