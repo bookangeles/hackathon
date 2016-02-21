@@ -4,12 +4,19 @@ function routes(app) {
   Client = app.models.Client
   const router = app.loopback.Router()
   router.use(require('../middlewares/auth.js')(app))
-  router.get('/', getBooksForUser)
+  router.get('/', getBooks)
+  router.post('/', uploadBook)
   return router
 }
 
-function getBooksForUser(req, res, next) {
+function getBooks(req, res, next) {
   req.currentUser.books((err, books) => {
-    res.json()
+    books.owner
+  })
+}
+
+function uploadBook(req, res, next) {
+  req.currentUser.books((err, books) => {
+    books.owner
   })
 }
