@@ -12,6 +12,11 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import LeftNav from 'material-ui/lib/left-nav';
 import FlatButton from 'material-ui/lib/flat-button';
 
+const logout = function() {
+  document.cookie = 'auth_token=';
+  window.location = '/';
+}
+
 const AppBarExampleIconMenu = React.createClass({
   render() {
     return (
@@ -22,7 +27,7 @@ const AppBarExampleIconMenu = React.createClass({
           <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-            <MenuItem primaryText="Sign out" onTouchTap={_=> console.log('logout')} />
+            <MenuItem primaryText="Sign out" onTouchTap={logout} />
           </IconMenu>
         }
       />
