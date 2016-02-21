@@ -34,11 +34,6 @@
       "foreignKey": "owner"
     }
   },
-  "acls": [{
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "accessType": "READ",
-      "permission": "ALLOW"
-    }],
+  "acls": [],
   "methods": {}
 }
