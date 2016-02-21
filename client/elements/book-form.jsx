@@ -70,6 +70,10 @@ export default React.createClass({
   },
 
   handleInputChange(attr, e) { this.data[attr] = e.target.value; },
+  handleTitleChange(e) {
+    this.data.title = e.target.value;
+    this.setState({ fileName: e.target.value });
+  },
   handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
 
   handleSubmit(e, id, oe) {
@@ -101,7 +105,7 @@ export default React.createClass({
           method="post"
           onSubmit={this.handleSubmit}
           >
-          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={_.partial(this.handleInputChange, "title")}/><br/>
+          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={this.handleTitleChange}/><br/>
           <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
           <TextField name="cover" floatingLabelText="Book cover link" onChange={_.partial(this.handleInputChange, "cover")}/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
