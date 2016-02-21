@@ -6,7 +6,13 @@
     "validateUpsert": true
   },
   "properties": {
-    "name": {
+    "caption": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "properties": {
+    "color": {
       "type": "string",
       "required": true
     }

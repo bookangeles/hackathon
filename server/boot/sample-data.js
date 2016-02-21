@@ -1,15 +1,26 @@
 module.exports = function(app) {
   var Client = app.models.Client;
   var Book = app.models.Book;
+  var Tag = app.models.Tag;
 
   Client.create([
-    { displayName: 'Один', email: 'user@one.com', password: 'sesame' },
-    { displayName: 'Zwei', email: 'user@two.com', password: 'sesame' },
-    { displayName: 'Tři', email: 'user@three.com', password: 'sesame' },
-    { displayName: 'Four', email: 'user@four.com', password: 'sesame' }
+    { displayName: 'User One', email: 'user@one.com', password: 'sesame' },
+    { displayName: 'User Zwei', email: 'user@two.com', password: 'sesame' },
+    { displayName: 'User Tři', email: 'user@three.com', password: 'sesame' },
+    { displayName: 'User Четыре', email: 'user@four.com', password: 'sesame' }
   ], function (err, res) {
     if (err) throw new Erro('mockups insertion fail')
     console.log(`Mockup: ${res.length} mock users created`)
+  })
+
+  Tag.create([
+    { caption: 'rocketscience', owner: 1, color: 'green' },
+    { caption: 'software', owner: 1, color: 'blue' },
+    { caption: 'romace', owner: 1, color: 'grey' },
+    { caption: 'short', owner: 2, color: 'red' }
+  ], function (err, res) {
+    if (err) throw new Erro('mockups insertion fail')
+    console.log(`Mockup: ${res.length} mock tags created`)
   })
 
   Book.create([
