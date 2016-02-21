@@ -7,7 +7,17 @@ function routes(app) {
   router.use(require('../middlewares/auth.js')(app))
   router.get('/', getBooks)
   router.post('/', uploadBook(app))
+  router.post('/:id/tag/:id', uploadBook(app))
   return router
+}
+
+function getBooks(req, res, next) {
+  req.currentUser.books((err, books) => {
+    if (err) return next(err)
+    res.json(req.query.tag
+      ? _.filter(books, (book) => ~book.tags.indexOf(parseInt(req.query.tag)))
+      : books)
+  })
 }
 
 function getBooks(req, res, next) {

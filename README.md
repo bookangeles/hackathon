@@ -127,7 +127,7 @@ response: list of tags
 
 **add tag**
 
-`POST /bapi/books`
+`POST /bapi/tags`
 
 payload:
 
@@ -137,5 +137,5 @@ payload:
     "color": "..."
   }
 
-response: added book object
+response: added tag object
 
