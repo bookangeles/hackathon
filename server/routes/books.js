@@ -12,6 +12,7 @@ function routes(app) {
 
 function getBooks(req, res, next) {
   req.currentUser.books((err, books) => {
+    if (err) return next(err)
     res.json(books)
   })
 }
