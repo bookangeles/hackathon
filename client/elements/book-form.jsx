@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import XHRUploader from 'react-xhr-uploader';
+var ReactTags = require('react-tag-input').WithContext;
 import { browserHistory } from 'react-router';
 
 // Needed for onTouchTap
@@ -56,7 +57,14 @@ class MyUploader extends XHRUploader {
 export default React.createClass({
   getInitialState() {
     this.data = {};
+    this.availableTags = [];
+    $.get('/bapi/tags', (data) => {
+      this.availableTags = data;
+      this.setState({ suggestions: _.map(data, 'caption') });
+    })
     return {
+      tags: [],
+      suggestions: [],
       disabled: true
     };
   },
@@ -74,7 +82,6 @@ export default React.createClass({
     this.data.title = e.target.value;
     this.setState({ fileName: e.target.value });
   },
-  handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
 
   handleSubmit(e, id, oe) {
     e.preventDefault();
@@ -90,6 +97,41 @@ export default React.createClass({
         console.error(error);
       }
     });
+  },
+
+  // tags
+  // TODO:
+  // - [ ] create new tags
+  // - [x] remove old input
+  // - [ ] use material-ui input
+  // - [ ] styling
+  // - [ ] add hidden input for tags
+
+  handleAddition: function(tag) {
+    console.log('add', tag, this.state.tags, this.state.suggestions);
+    var tags = this.state.tags;
+    if (_(tags).map('text').includes(tag)) {
+      return;
+    }
+
+    tags.push({
+      id: tags.length + 1,
+      text: tag
+    });
+    this.setState({ tags: tags });
+
+    if (_.includes(this.state.suggestions, tag)) {
+      this.setState({ suggestions: _.reject(this.state.suggestions, (el) => { return el === tag; }) })
+    } else {
+      // Create new tag
+      $.post('/bapi/tags', {
+        color: _.sample(['grey', 'blue', 'green', 'yellow', 'orange', 'red']),
+        caption: tag
+      }, (data) => {
+        console.log('tag created', data);
+        this.availableTags.push(data);
+      });
+    }
   },
 
   render() {
@@ -108,7 +150,11 @@ export default React.createClass({
           <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={this.handleTitleChange}/><br/>
           <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
-          <TextField name="tags" floatingLabelText="Tags" onChange={this.handleTagsChange}/><br/>
+          <label>Tags</label><br/>
+          <ReactTags tags={this.state.tags}
+            suggestions={this.state.suggestions}
+            handleAddition={this.handleAddition}
+            /><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
