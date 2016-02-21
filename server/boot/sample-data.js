@@ -1,16 +1,28 @@
 module.exports = function(app) {
-  var Client = app.models.Client;
-  var Book = app.models.Book;
-  var Tag = app.models.Tag;
+  if (process.env.NODE_ENV === 'production') return;
 
-  Client.create([
-    { displayName: 'User One', email: 'user@one.com', password: 'sesame' },
-    { displayName: 'User Zwei', email: 'user@two.com', password: 'sesame' },
-    { displayName: 'User Tři', email: 'user@three.com', password: 'sesame' },
-    { displayName: 'User Четыре', email: 'user@four.com', password: 'sesame' }
-  ], function (err, res) {
+  var Client = app.models.Client
+    , Book = app.models.Book
+    , Tag = app.models.Tag
+    , colors = require('colors')
+
+    , mockUsers = [
+      { displayName: 'User One', email: 'user@one.com', password: 'sesame' },
+      { displayName: 'User Zwei', email: 'user@two.com', password: 'sesame' },
+      { displayName: 'User Tři', email: 'user@three.com', password: 'sesame' },
+      { displayName: 'User Четыре', email: 'user@four.com', password: 'sesame' }
+    ]
+
+
+  Client.create(mockUsers, function (err, res) {
     if (err) throw new Erro('mockups insertion fail')
-    console.log(`Mockup: ${res.length} mock users created`)
+    console.log(`Mockup: ${res.length} mock users created`.yellow.bgBlack)
+    mockUsers.forEach(user =>
+      require('request')(
+        { method: 'POST', url: 'http://0.0.0.0:3000/api/clients/login', json: true, body: user },
+        (err, res, body) => console.log(`Mockup: access_token for ${user.email} is ${body.id}`.yellow.bgBlack)
+      )
+    )
   })
 
   Tag.create([
@@ -20,7 +32,7 @@ module.exports = function(app) {
     { caption: 'short', owner: 2, color: 'red' }
   ], function (err, res) {
     if (err) throw new Erro('mockups insertion fail')
-    console.log(`Mockup: ${res.length} mock tags created`)
+    console.log(`Mockup: ${res.length} mock tags created`.yellow.bgBlack)
   })
 
   Book.create([
@@ -116,6 +128,6 @@ module.exports = function(app) {
     }
   ], function (err, res) {
     if (err) throw new Erro('mockups insertion fail')
-    console.log(`Mockup: ${res.length} mock books created`)
+    console.log(`Mockup: ${res.length} mock books created`.yellow.bgBlack)
   })
 };
