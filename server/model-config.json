@@ -14,11 +14,15 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
     "public": false
+  },
+  "Email": {
+    "dataSource": "Email"
   },
   "ACL": {
     "dataSource": "db",
@@ -29,6 +33,25 @@
     "public": false
   },
   "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Client": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "emailVerificationRequired": false
+    }
+  },
+  "Book": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Share": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Tag": {
     "dataSource": "db",
     "public": false
   }

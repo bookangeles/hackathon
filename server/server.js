@@ -1,10 +1,13 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-
+var bodyParser = require('body-parser');
 var app = module.exports = loopback();
 
 app.set('views', './server/views'); 
 app.set('view engine', 'jade');
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(loopback.token());
 
 var isProduction = process.env.NODE_ENV === 'production';
 

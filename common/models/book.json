@@ -1,0 +1,49 @@
+{
+  "name": "Book",
+  "plural": "books",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fileName": {
+      "type": "string",
+      "required": true
+    },
+    "fileFormat": {
+      "type": "string",
+      "required": true
+    },
+    "fileUrl": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "tags": {
+     "type": "array",
+     "default": []
+    },
+    "author": {
+      "type": "string"
+    },
+    "coverUrl": {
+      "type": "string"
+    },
+    "smallCoverUrl": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

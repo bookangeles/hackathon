@@ -1,0 +1,30 @@
+{
+  "name": "Tag",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "caption": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "properties": {
+    "color": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "books": {
+      "type": "hasAndBelongsToMany",
+      "model": "Book",
+      "foreignKey": "tags"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
