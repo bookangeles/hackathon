@@ -20,14 +20,20 @@ export default React.createClass({
     return (
       <div>
         <h2>Upload a new book</h2>
-        <form className="bookForm">
+        <form
+          className="bookForm"
+          id="uploadForm"
+          encType="multipart/form-data"
+          action="/bapi/books?access_token=G8ouTGf7lHahWOG7zb81AP4cCh4pRQdArgmdrxptxmQfsXtKB9sh9Q32LmvmqAdy"
+          method="post"
+          >
           <TextField name="title" floatingLabelText="Book title"/><br/>
           <TextField name="author" floatingLabelText="Book author"/><br/>
-          <p><label htmlFor="form_file">File</label><input id="form_file" type="file" name="file"/></p>
+          <p><label htmlFor="form_file">File</label><input id="form_file" type="file" name="book"/></p>
           <p><label htmlFor="form_tags">Tags</label><input id="form_tags" name="tags"/></p>
           <TextField name="cover" floatingLabelText="Book cover link"/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine/><br/>
-          <RaisedButton type="submit" label="Submit" />
+          <RaisedButton type="submit" label="Upload" />
         </form>
       </div>
     );
