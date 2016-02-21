@@ -30,6 +30,7 @@ function uploadBook(app) {
         title: req.body.title,
         author: req.body.author,
         note: req.body.note,
+        createdAt: Date.now(),
       }, (err, book) =>
         err ? next(err) : res.json(book))
     }

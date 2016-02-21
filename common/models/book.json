@@ -37,6 +37,9 @@
     },
     "note": {
       "type": "string"
+    },
+    "createdAt": {
+      "type": "number"
     }
   },
   "validations": [],
