@@ -67,7 +67,21 @@ export default React.createClass({
     });
   },
 
-  // TODO: ajax-submit
+  handleSubmit(e, id, oe) {
+    e.preventDefault();
+    $.ajax({
+      url: e.target.action,
+      method: e.target.method,
+      data: $(e.target).serialize(),
+      success: function(data) {
+        console.log(arguments);
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  },
+
   render() {
     return (
       <div>
@@ -79,12 +93,12 @@ export default React.createClass({
           encType="multipart/form-data"
           action={this.state.action}
           method="post"
+          onSubmit={this.handleSubmit}
           >
           <TextField name="title" floatingLabelText="Book title" value={this.state.fileName}/><br/>
           <TextField name="author" floatingLabelText="Book author"/><br/>
           <TextField name="cover" floatingLabelText="Book cover link"/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine/><br/>
-          <TextField name="tags" floatingLabelText="Tags"/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
