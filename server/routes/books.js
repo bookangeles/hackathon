@@ -15,14 +15,14 @@ function getBooks(req, res, next) {
   req.currentUser.books((err, books) => {
     if (err) return next(err)
     res.json(req.query.tag
-      ? _.filter(books, (book) => ~book.tags.indexOf(parseInt(req.query.tag)))
+      ? _.filter(books, (book) => ~book.tags.indexOf(req.query.tag))
       : books)
   })
 }
 
 function updateBook(req, res, next) {
   req.currentUser.books.updateAll(
-    { id: parseInt(req.params.id) },
+    { id: req.params.id },
     _.pick(req.body, [ 'tags', 'author', 'note', 'title' ]),
     (err, book) => {
       if (err) return next(err)
