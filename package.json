@@ -44,6 +44,7 @@
     "loopback": "^2.8.0",
     "loopback-boot": "^2.4.0",
     "loopback-component-explorer": "^2.1.0",
+    "loopback-connector-mongodb": "1.13.3",
     "loopback-datasource-juggler": "^2.7.0",
     "material-ui": "^0.14.4",
     "moment": ">=2.9.0",

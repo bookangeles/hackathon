@@ -3,6 +3,12 @@
     "name": "db",
     "connector": "memory"
   },
+  "mongo": {
+    "name": "mongo",
+    "connector": "mongodb",
+    "database": "bookangeles",
+    "debug": true
+  },
   "Email": {
     "name": "Email",
     "connector": "mail",
