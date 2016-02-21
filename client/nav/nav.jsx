@@ -27,7 +27,7 @@ const AppBarExampleIconMenu = React.createClass({
           <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-            <MenuItem primaryText="Sign out" onTouchTap={logout} />
+            <MenuItem primaryText="Log out" onTouchTap={logout} />
           </IconMenu>
         }
       />
@@ -64,11 +64,13 @@ export default React.createClass({
           <Link to="/" onClick={this.handleToggle}><MenuItem>Library</MenuItem></Link>
           <Link to="/storage" onClick={this.handleToggle}><MenuItem>Storage</MenuItem></Link>
           <Link to="/profile" onClick={this.handleToggle}><MenuItem>Profile</MenuItem></Link>
+          <a href="http://bookangeles.weebly.com/" target="_blank"><MenuItem>About</MenuItem></a>
         </LeftNav>
         <nav>
           <ul role="nav">
             <li><Link to="/">Library</Link></li>
             <li><Link to="/form">Upload a book</Link></li>
+            <li><a href="http://bookangeles.weebly.com/" target="_blank">About</a></li>
           </ul>
         </nav>
 
