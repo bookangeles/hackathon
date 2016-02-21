@@ -7,6 +7,7 @@ app.set('views', './server/views');
 app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(loopback.token());
 
 var isProduction = process.env.NODE_ENV === 'production';
