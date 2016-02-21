@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import XHRUploader from 'react-xhr-uploader';
+import { browserHistory } from 'react-router';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -68,7 +69,7 @@ export default React.createClass({
     });
   },
 
-  handleInputChange(e, attr) { this.data[attr] = e.target.value; },
+  handleInputChange(attr, e) { this.data[attr] = e.target.value; },
   handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
 
   handleSubmit(e, id, oe) {
@@ -77,10 +78,11 @@ export default React.createClass({
       url: e.target.action,
       method: e.target.method,
       data: this.data,
-      success: function(data) {
-        console.log(arguments);
+      success: (data, status) => {
+        console.log(data, status);
+        browserHistory.push('/');
       },
-      error: function(error) {
+      error: (error) => {
         console.error(error);
       }
     });
