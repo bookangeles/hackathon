@@ -1,5 +1,8 @@
 require('./book-form.styl');
 
+import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/lib/text-field';
+
 export default React.createClass({
   getDefaultProps() {
     return {
@@ -9,15 +12,16 @@ export default React.createClass({
   render() {
     return (
       <div>
-      <form className="bookForm">
-        <p><label htmlFor="form_title">Book title</label><input id="form_title" name="title"/></p>
-        <p><label htmlFor="form_author">Book author</label><input id="form_author" name="author"/></p>
-        <p><label htmlFor="form_file">File</label><input id="form_file" type="file" name="file"/></p>
-        <p><label htmlFor="form_tags">Tags</label><input id="form_tags" name="tags"/></p>
-        <p><label htmlFor="form_cover">Book cover link</label><input id="form_cover" name="cover"/></p>
-        <p><label htmlFor="form_note">Note</label><textarea id="form_note" name="note"/></p>
-        <input type="submit" value="Submit"/>
-      </form>
+        <h2>Upload a new book</h2>
+        <form className="bookForm">
+          <TextField name="title" floatingLabelText="Book title"/><br/>
+          <TextField name="author" floatingLabelText="Book author"/><br/>
+          <p><label htmlFor="form_file">File</label><input id="form_file" type="file" name="file"/></p>
+          <p><label htmlFor="form_tags">Tags</label><input id="form_tags" name="tags"/></p>
+          <TextField name="cover" floatingLabelText="Book cover link"/><br/>
+          <TextField name="note" floatingLabelText="Note" multiLine/><br/>
+          <RaisedButton type="submit" label="Submit" />
+        </form>
       </div>
     );
   }
