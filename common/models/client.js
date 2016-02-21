@@ -4,10 +4,10 @@ const
 
 module.exports = function(Client) {
   Client.beforeRemote('create', function(context, unused, next) {
-    if (~['bezengi@gmail.com'
-        , 'boris362@yandex.ru'
-        , 'kotovivan@gmail.com'
-        , 'normalno@gmail.com'].indexOf(_.get(context.req.body.email)))
+    // if (~['bezengi@gmail.com'
+    //     , 'boris362@yandex.ru'
+    //     , 'kotovivan@gmail.com'
+    //     , 'normalno@gmail.com'].indexOf(_.get(context.req.body.email)))
       return next()
     
     Client.app.models.Share.find({
