@@ -3,6 +3,11 @@
   "plural": "books",
   "base": "PersistedModel",
   "idInjection": true,
+  "settings": {
+    "mongodb": {
+      "allowExtendedOperators": true
+    }
+  },
   "options": {
     "validateUpsert": true
   },

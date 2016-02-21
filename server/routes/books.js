@@ -6,6 +6,7 @@ function routes(app) {
   const router = app.loopback.Router()
   router.use(require('../middlewares/auth.js')(app))
   router.get('/', getBooks)
+  router.get('/search', searchBooks)
   router.get('/:id', downloadBook)
   router.post('/:id', updateBook)
   router.post('/', uploadBook(app))
@@ -59,5 +60,22 @@ function downloadBook(req, res, next) {
     if (err) return next(err);
     if (!book) return res.sendStatus(404);
     res.download(book.fileUrl, book.fileName);
+  });
+}
+
+function searchBooks(req, res, next) {
+  var pattern = new RegExp('.*' + req.query.q + '.*', "i");
+  req.currentUser.books({ where:
+    {
+      or: [
+        {fileName: {like: pattern}},
+        {title: {like: pattern}},
+        {author: {like: pattern}},
+        {note: {like: pattern}}
+      ]
+    }
+  }, (err, result) => {
+    if (err) return next(err);
+    res.json(result);
   });
 }
