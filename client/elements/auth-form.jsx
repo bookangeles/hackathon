@@ -46,7 +46,7 @@ const AuthForm = React.createClass({
       $.post('/api/clients/login', { email: this.state.email, password: this.state.pass })
       .done(data => {
         document.cookie = `auth_token=${data.id}`;
-        $.ajaxSetup({ headers: { 'X-Access-Token': data.id } });
+        window.location = '/';
       })
       .fail(data => {
         let errText = 'Wrong auth, please check email and password';
