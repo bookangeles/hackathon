@@ -1,6 +1,7 @@
 require('./nav.styl');
 
 import { Link } from 'react-router';
+import Auth from '../elements/auth-form.jsx';
 
 export default React.createClass({
   render() {
@@ -14,6 +15,7 @@ export default React.createClass({
             <li><Link to="/form">Upload a book</Link></li>
           </ul>
         </nav>
+        <Auth />
         {this.props.children}
       </div>
     );
