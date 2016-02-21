@@ -24,7 +24,6 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2>Library</h2>
         {this.state.books &&
           <BookList books={this.state.books} tags={this.state.tags} />
         }
