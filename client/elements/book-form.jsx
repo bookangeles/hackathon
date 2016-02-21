@@ -38,8 +38,7 @@ class MyUploader extends XHRUploader {
       // Add callback on successful file upload
       xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status === 200) {
-          // TODO: here we have to update form action and enable submit button
-          console.log(JSON.parse(xhr.response));
+          this.props.onFileLoaded(JSON.parse(xhr.response));
         }
       }
 
@@ -48,12 +47,22 @@ class MyUploader extends XHRUploader {
 }
 
 // TODO: setup correct access_token
-const accessToken = '/bapi/books?access_token=kGWNoGt8LNXlzYLAJnzdrFQ1rnnIERmGooE89JMM8LbQg6vJGuSdH2iUTBuRF5n3';
+const accessToken = 'access_token=kGWNoGt8LNXlzYLAJnzdrFQ1rnnIERmGooE89JMM8LbQg6vJGuSdH2iUTBuRF5n3';
+const fileUploadUrl = `/bapi/books?${accessToken}`;
 
 export default React.createClass({
-  getDefaultProps() {
+  getInitialState() {
     return {
-    }
+      disabled: true
+    };
+  },
+
+  onFileLoaded(response) {
+    this.setState({
+      disabled: false,
+      action: `/bapi/books/${response.id}?${accessToken}`,
+      fileName: response.fileName
+    });
   },
 
   // TODO: ajax-submit
@@ -61,20 +70,20 @@ export default React.createClass({
     return (
       <div>
         <h2>Upload a new book</h2>
-        <MyUploader url={accessToken} fieldName="book" auto />
+        <MyUploader url={fileUploadUrl} fieldName="book" auto onFileLoaded={this.onFileLoaded} />
         <form
           className="bookForm"
           id="uploadForm"
           encType="multipart/form-data"
-          action={accessToken}
+          action={this.state.action}
           method="post"
           >
-          <TextField name="title" floatingLabelText="Book title"/><br/>
+          <TextField name="title" floatingLabelText="Book title" value={this.state.fileName}/><br/>
           <TextField name="author" floatingLabelText="Book author"/><br/>
           <TextField name="cover" floatingLabelText="Book cover link"/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine/><br/>
           <TextField name="tags" floatingLabelText="Tags"/><br/>
-          <RaisedButton type="submit" label="Upload" disabled />
+          <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
     );
