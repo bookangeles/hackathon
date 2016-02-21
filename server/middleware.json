@@ -28,6 +28,9 @@
     "helmet#noSniff": {},
     "helmet#noCache": {
       "enabled": false
+    },
+    "morgan": {
+      "params": ["dev"]
     }
   },
   "session": {},
