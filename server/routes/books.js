@@ -6,6 +6,7 @@ function routes(app) {
   const router = app.loopback.Router()
   router.use(require('../middlewares/auth.js')(app))
   router.get('/', getBooks)
+  router.get('/:id', downloadBook)
   router.post('/:id', updateBook)
   router.post('/', uploadBook(app))
   return router
@@ -51,4 +52,12 @@ function uploadBook(app) {
     require('../lib/storage')(req, res,
       (err => err ? next(err) : saveToDb()))
   }
+}
+
+function downloadBook(req, res, next) {
+  req.currentUser.books.findById(req.params.id, (err, book) => {
+    if (err) return next(err);
+    if (!book) return res.sendStatus(404);
+    res.download(book.fileUrl, book.fileName);
+  });
 }
