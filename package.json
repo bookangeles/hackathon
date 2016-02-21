@@ -10,11 +10,12 @@
   "license": "MIT",
   "main": "server/server.js",
   "scripts": {
-    "start": "node .",
+    "prestart": "npm run build",
+    "start": "NODE_ENV=production node .",
     "pretest": "jshint .",
     "posttest": "nsp check",
-    "try": "NODE_ENV=development webpack",
-    "build": "webpack",
+    "try": "webpack",
+    "build": "NODE_ENV=production webpack",
     "webpack": "rm -fr ./public/compiled && webpack-dev-server"
   },
   "dependencies": {
