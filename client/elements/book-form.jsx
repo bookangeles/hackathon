@@ -107,7 +107,6 @@ export default React.createClass({
           >
           <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={this.handleTitleChange}/><br/>
           <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
-          <TextField name="cover" floatingLabelText="Book cover link" onChange={_.partial(this.handleInputChange, "cover")}/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
           <TextField name="tags" floatingLabelText="Tags" onChange={this.handleTagsChange}/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
