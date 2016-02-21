@@ -45,6 +45,7 @@
     "loopback-component-explorer": "^2.1.0",
     "loopback-datasource-juggler": "^2.7.0",
     "moment": ">=2.9.0",
+    "multer": "1.1.0",
     "postcss-loader": "0.7.0",
     "ramda": "0.19.1",
     "raven": "0.8.x",
