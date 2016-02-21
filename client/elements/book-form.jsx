@@ -1,7 +1,14 @@
 require('./book-form.styl');
 
-import RaisedButton from 'material-ui/lib/raised-button';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/lib/text-field';
+import RaisedButton from 'material-ui/lib/raised-button';
+
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
 
 export default React.createClass({
   getDefaultProps() {
