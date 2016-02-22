@@ -17,7 +17,7 @@ export default React.createClass({
   onTagsLoad(data) {
     var tags = makeKeys(data);
     $.getJSON('/bapi/books', (data) => {
-      var books = makeKeys(data);
+      var books = makeKeys(_.sortBy(data, 'createdAt').reverse());
       this.setState({ books, tags });
     });
   },
