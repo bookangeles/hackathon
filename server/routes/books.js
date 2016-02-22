@@ -2,6 +2,18 @@ module.exports = (route, app) => app.loopback.Router().use(`/bapi/${route}`, rou
 
 var _ = require('lodash')
 
+/*
+Supported mimetypes:
+application/epub+zip
+application/msword
+application/pdf
+application/x-mobipocket-ebook
+image/vnd.djvu
+image/x-djvu
+text/xml
+ */
+var SUPPORTED_MIME_TYPES = /(epub|msword|pdf|pdf|djvu|xml|mobipocket|ebook)/;
+
 function routes(app) {
   const router = app.loopback.Router()
   router.use(require('../middlewares/auth.js')(app))
@@ -37,6 +49,8 @@ function uploadBook(app) {
   return function (req, res, next) {
     var saveToDb = () => {
       var book = req.file
+      if (!SUPPORTED_MIME_TYPES.test(book.mimetype))
+        return unsupportedType(res, book.path)
       app.models.Book.create({
         owner: req.currentUser.id,
         fileName: book.originalname,
@@ -53,6 +67,13 @@ function uploadBook(app) {
     require('../lib/storage')(req, res,
       (err => err ? next(err) : saveToDb()))
   }
+}
+
+function unsupportedType(res, path) {
+  require('fs').unlink(path, (err) => {
+    if (err) return res.sendStatus(500)
+    return res.sendStatus(415)
+  })
 }
 
 function downloadBook(req, res, next) {
