@@ -15,9 +15,9 @@ export default React.createClass({
   },
 
   onTagsLoad(data) {
-    var tags = data;
+    var tags = makeKeys(data);
     $.getJSON('/bapi/books', (data) => {
-      var books = data;
+      var books = makeKeys(data);
       this.setState({ books, tags });
     });
   },
