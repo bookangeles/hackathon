@@ -14,8 +14,13 @@ const TagCloud = React.createClass({
   render() {
     return (
       <div className={this.b_()}>
-        {this.props.tags && _.map(this.props.tags, (tag, key) =>
-          <Tag key={key} modifier={this.props.modifier} caption={tag.caption} />)}
+        {this.props.tags &&
+          _(this.props.tags)
+            .filter(tag => !!tag.caption)
+            .map((tag, key) =>
+              <Tag key={key} modifier={this.props.modifier} caption={tag.caption} />
+            ).value()
+        }
       </div>
     );
   },
