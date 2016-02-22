@@ -1,22 +1,15 @@
 require('./book-form.styl');
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import { browserHistory } from 'react-router';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import XHRUploader from 'react-xhr-uploader';
-import { WithContext as ReactTags } from 'react-tag-input';
-import { browserHistory } from 'react-router';
-
-// Needed for onTouchTap
-// Can go away when react 1.0 release
-// Check this repo:
-// https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin();
+import CustomTags from '../elements/react-tags.jsx';
 
 class MyUploader extends XHRUploader {
   uploadFile(file, progressCallback) {
     // copypaste https://github.com/rma-consulting/react-xhr-uploader/blob/e99c66b/src/index.js#L254-L275
-    if(file) {
+    if (file) {
       const formData = new FormData();
       const xhr = new XMLHttpRequest();
 
@@ -26,9 +19,9 @@ class MyUploader extends XHRUploader {
         progressCallback(100);
       };
 
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          progressCallback((e.loaded / e.total) * 100);
+      xhr.upload.onprogress = (evt) => {
+        if (evt.lengthComputable) {
+          progressCallback((evt.loaded / evt.total) * 100);
         }
       };
 
@@ -54,18 +47,13 @@ class MyUploader extends XHRUploader {
   }
 }
 
-export default React.createClass({
+const BookForm = React.createClass({
+  mixins: [Bem],
   getInitialState() {
     this.data = {};
-    this.availableTags = [];
-    $.get('/bapi/tags', (data) => {
-      this.availableTags = data;
-      this.setState({ suggestions: _.map(data, 'caption') });
-    })
     return {
-      tags: [],
-      suggestions: [],
-      disabled: true
+      disabled: true,
+      tags: []
     };
   },
 
@@ -77,26 +65,20 @@ export default React.createClass({
     });
   },
 
-  handleInputChange(attr, e) { this.data[attr] = e.target.value; },
-  handleTitleChange(e) {
-    this.data.title = e.target.value;
-    this.setState({ fileName: e.target.value });
+  handleInputChange(attr, evt) { this.data[attr] = evt.target.value; },
+  handleTitleChange(evt) {
+    this.data.title = evt.target.value;
+    this.setState({ fileName: evt.target.value });
   },
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.data.tags = _.map(this.state.tags, (tag) => {
-      return _.find(this.availableTags, (atag) => {
-        return atag.caption === tag.text;
-      }).id;
-    });
-    console.log(this.availableTags, this.state.tags, this.data.tags);
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.data.tags = _.pluck(this.state.tags, 'id');
     $.ajax({
-      url: e.target.action,
-      method: e.target.method,
+      url: evt.target.action,
+      method: evt.target.method,
       data: this.data,
       success: (data, status) => {
-        console.log(data, status);
         browserHistory.push('/');
       },
       error: (error) => {
@@ -105,78 +87,13 @@ export default React.createClass({
     });
   },
 
-  // tags
-  // TODO:
-  // - [x] create new tags
-  // - [x] remove old input
-  // - [x] attach tags to form
-  // - [x] handle delete
-  // - [ ] use material-ui input
-  // - [ ] styling
-  // - [x] fix import (replace require with import)
-  // - [x] handle drag
-  // - [ ] fix deletion bug (see below)
-  // - [ ] add hidden input for tags
-
-  // TODO: have a bug here
-  // steps to reproduce:
-  // - given tags `xxx` and `xcc`
-  // - add tags `xxx` and `xcc`
-  // - remove tag `xxx`
-  // - add tag `xxx` again`
-  // - get `Encountered two children with the same key` error
-  handleDelete: function(i) {
-    var tags = this.state.tags;
-    var tag = tags.splice(i, 1)[0];
-    var suggestions = this.state.suggestions;
-    this.setState({ tags: tags });
-    suggestions.push(tag.text);
-    this.setState({ suggestions: suggestions });
-    console.log('delete', tag, suggestions);
-  },
-
-  handleAddition: function(tag) {
-    console.log('add', tag, this.state.tags, this.state.suggestions);
-    var tags = this.state.tags;
-    if (_(tags).map('text').includes(tag)) {
-      return;
-    }
-
-    tags.push({
-      id: tags.length + 1,
-      text: tag
-    });
-    this.setState({ tags: tags });
-
-    if (_.includes(this.state.suggestions, tag)) {
-      this.setState({ suggestions: _.reject(this.state.suggestions, (el) => { return el === tag; }) })
-    } else {
-      // Create new tag
-      $.post('/bapi/tags', {
-        color: _.sample(['grey', 'blue', 'green', 'yellow', 'orange', 'red']),
-        caption: tag
-      }, (data) => {
-        this.availableTags.push(data);
-        console.log('tag created', data, this.availableTags);
-      });
-    }
-  },
-
-  handleDrag: function(tag, currPos, newPos) {
-    var tags = this.state.tags;
-
-    // mutate array
-    tags.splice(currPos, 1);
-    tags.splice(newPos, 0, tag);
-
-    // re-render
-    this.setState({ tags: tags });
+  onTagsUpd(newTags) {
+    this.setState({ tags: newTags });
   },
 
   render() {
     return (
-      <div>
-        <h2>Upload a new book</h2>
+      <div className={this.b_()}>
         <MyUploader url="/bapi/books" fieldName="book" auto onFileLoaded={this.onFileLoaded} />
         <form
           className="bookForm"
@@ -190,14 +107,13 @@ export default React.createClass({
           <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
           <label>Tags</label><br/>
-          <ReactTags tags={this.state.tags}
-            suggestions={this.state.suggestions}
-            handleAddition={this.handleAddition}
-            handleDelete={this.handleDelete}
-            handleDrag={this.handleDrag} /><br/><br/><br/><br/>
+          <CustomTags className={this.b_('-tags')} onUpdate={this.onTagsUpd}/>
+          <br/><br/><br/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
     );
   }
 });
+
+export default BookForm;
