@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import XHRUploader from 'react-xhr-uploader';
-var ReactTags = require('react-tag-input').WithContext;
+import { WithContext as ReactTags } from 'react-tag-input';
 import { browserHistory } from 'react-router';
 
 // Needed for onTouchTap
@@ -113,7 +113,7 @@ export default React.createClass({
   // - [x] handle delete
   // - [ ] use material-ui input
   // - [ ] styling
-  // - [ ] fix import (replace require with import)
+  // - [x] fix import (replace require with import)
   // - [x] handle drag
   // - [ ] fix deletion bug (see below)
   // - [ ] add hidden input for tags
