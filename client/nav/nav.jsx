@@ -76,6 +76,8 @@ export default React.createClass({
 
         {!this.state.authorized && <Auth onAuth={this.toggleAuth} />}
         {this.props.children}
+
+        <footer />
       </div>
     );
   },
