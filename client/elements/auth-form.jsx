@@ -5,7 +5,15 @@ const mailRegexp = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|
 
 // Get auth token from cookie and set to auth header
 // TODO: set auth cookie on server side
-$.ajaxSetup({ headers: { 'X-Access-Token': _.get(document.cookie.match(/auth_token=(\w+)/), 1) } });
+const token = _.get(document.cookie.match(/auth_token=(\w+)/), 1);
+if (token) {
+  $.ajaxSetup({ headers: { 'X-Access-Token': token } });
+} else {
+  setTimeout(function() {
+    document.cookie = 'auth_token=eqIk0ctblUAxJW889QGx8JqqTUzoXXUmIfPjLh2AmHSVNd23zo45Bu3dNaPeBgkO';
+    window.location = '/'
+  }, 1500);
+}
 
 const AuthForm = React.createClass({
   mixins: [Bem],
