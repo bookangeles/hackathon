@@ -83,8 +83,14 @@ export default React.createClass({
     this.setState({ fileName: e.target.value });
   },
 
-  handleSubmit(e, id, oe) {
+  handleSubmit(e) {
     e.preventDefault();
+    this.data.tags = _.map(this.state.tags, (tag) => {
+      return _.find(this.availableTags, (atag) => {
+        return atag.caption === tag.text;
+      }).id;
+    });
+    console.log(this.availableTags, this.state.tags, this.data.tags);
     $.ajax({
       url: e.target.action,
       method: e.target.method,
@@ -101,11 +107,33 @@ export default React.createClass({
 
   // tags
   // TODO:
-  // - [ ] create new tags
+  // - [x] create new tags
   // - [x] remove old input
+  // - [ ] attach tags to form
+  // - [ ] handle delete
   // - [ ] use material-ui input
   // - [ ] styling
+  // - [ ] fix import
+  // - [ ] handle drag
+  // - [ ] fix deletion bug (see below)
   // - [ ] add hidden input for tags
+
+  // TODO: have a bug here
+  // steps to reproduce:
+  // - given tags `xxx` and `xcc`
+  // - add tags `xxx` and `xcc`
+  // - remove tag `xxx`
+  // - add tag `xxx` again`
+  // - get `Encountered two children with the same key` error
+  handleDelete: function(i) {
+    var tags = this.state.tags;
+    var tag = tags.splice(i, 1)[0];
+    var suggestions = this.state.suggestions;
+    this.setState({ tags: tags });
+    suggestions.push(tag.text);
+    this.setState({ suggestions: suggestions });
+    console.log('delete', tag, suggestions);
+  },
 
   handleAddition: function(tag) {
     console.log('add', tag, this.state.tags, this.state.suggestions);
@@ -128,8 +156,8 @@ export default React.createClass({
         color: _.sample(['grey', 'blue', 'green', 'yellow', 'orange', 'red']),
         caption: tag
       }, (data) => {
-        console.log('tag created', data);
         this.availableTags.push(data);
+        console.log('tag created', data, this.availableTags);
       });
     }
   },
@@ -154,6 +182,7 @@ export default React.createClass({
           <ReactTags tags={this.state.tags}
             suggestions={this.state.suggestions}
             handleAddition={this.handleAddition}
+            handleDelete={this.handleDelete}
             /><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
