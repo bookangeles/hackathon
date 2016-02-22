@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import XHRUploader from 'react-xhr-uploader';
+import { WithContext as ReactTags } from 'react-tag-input';
 import { browserHistory } from 'react-router';
 
 // Needed for onTouchTap
@@ -56,7 +57,14 @@ class MyUploader extends XHRUploader {
 export default React.createClass({
   getInitialState() {
     this.data = {};
+    this.availableTags = [];
+    $.get('/bapi/tags', (data) => {
+      this.availableTags = data;
+      this.setState({ suggestions: _.map(data, 'caption') });
+    })
     return {
+      tags: [],
+      suggestions: [],
       disabled: true
     };
   },
@@ -74,10 +82,15 @@ export default React.createClass({
     this.data.title = e.target.value;
     this.setState({ fileName: e.target.value });
   },
-  handleTagsChange(e) { this.data.tags = e.target.value.split(','); },
 
-  handleSubmit(e, id, oe) {
+  handleSubmit(e) {
     e.preventDefault();
+    this.data.tags = _.map(this.state.tags, (tag) => {
+      return _.find(this.availableTags, (atag) => {
+        return atag.caption === tag.text;
+      }).id;
+    });
+    console.log(this.availableTags, this.state.tags, this.data.tags);
     $.ajax({
       url: e.target.action,
       method: e.target.method,
@@ -90,6 +103,74 @@ export default React.createClass({
         console.error(error);
       }
     });
+  },
+
+  // tags
+  // TODO:
+  // - [x] create new tags
+  // - [x] remove old input
+  // - [x] attach tags to form
+  // - [x] handle delete
+  // - [ ] use material-ui input
+  // - [ ] styling
+  // - [x] fix import (replace require with import)
+  // - [x] handle drag
+  // - [ ] fix deletion bug (see below)
+  // - [ ] add hidden input for tags
+
+  // TODO: have a bug here
+  // steps to reproduce:
+  // - given tags `xxx` and `xcc`
+  // - add tags `xxx` and `xcc`
+  // - remove tag `xxx`
+  // - add tag `xxx` again`
+  // - get `Encountered two children with the same key` error
+  handleDelete: function(i) {
+    var tags = this.state.tags;
+    var tag = tags.splice(i, 1)[0];
+    var suggestions = this.state.suggestions;
+    this.setState({ tags: tags });
+    suggestions.push(tag.text);
+    this.setState({ suggestions: suggestions });
+    console.log('delete', tag, suggestions);
+  },
+
+  handleAddition: function(tag) {
+    console.log('add', tag, this.state.tags, this.state.suggestions);
+    var tags = this.state.tags;
+    if (_(tags).map('text').includes(tag)) {
+      return;
+    }
+
+    tags.push({
+      id: tags.length + 1,
+      text: tag
+    });
+    this.setState({ tags: tags });
+
+    if (_.includes(this.state.suggestions, tag)) {
+      this.setState({ suggestions: _.reject(this.state.suggestions, (el) => { return el === tag; }) })
+    } else {
+      // Create new tag
+      $.post('/bapi/tags', {
+        color: _.sample(['grey', 'blue', 'green', 'yellow', 'orange', 'red']),
+        caption: tag
+      }, (data) => {
+        this.availableTags.push(data);
+        console.log('tag created', data, this.availableTags);
+      });
+    }
+  },
+
+  handleDrag: function(tag, currPos, newPos) {
+    var tags = this.state.tags;
+
+    // mutate array
+    tags.splice(currPos, 1);
+    tags.splice(newPos, 0, tag);
+
+    // re-render
+    this.setState({ tags: tags });
   },
 
   render() {
@@ -108,7 +189,12 @@ export default React.createClass({
           <TextField name="title" floatingLabelText="Book title" value={this.state.fileName} onChange={this.handleTitleChange}/><br/>
           <TextField name="author" floatingLabelText="Book author" onChange={_.partial(this.handleInputChange, "author")}/><br/>
           <TextField name="note" floatingLabelText="Note" multiLine onChange={_.partial(this.handleInputChange, "note")}/><br/>
-          <TextField name="tags" floatingLabelText="Tags" onChange={this.handleTagsChange}/><br/>
+          <label>Tags</label><br/>
+          <ReactTags tags={this.state.tags}
+            suggestions={this.state.suggestions}
+            handleAddition={this.handleAddition}
+            handleDelete={this.handleDelete}
+            handleDrag={this.handleDrag} /><br/><br/><br/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
