@@ -109,12 +109,12 @@ export default React.createClass({
   // TODO:
   // - [x] create new tags
   // - [x] remove old input
-  // - [ ] attach tags to form
-  // - [ ] handle delete
+  // - [x] attach tags to form
+  // - [x] handle delete
   // - [ ] use material-ui input
   // - [ ] styling
-  // - [ ] fix import
-  // - [ ] handle drag
+  // - [ ] fix import (replace require with import)
+  // - [x] handle drag
   // - [ ] fix deletion bug (see below)
   // - [ ] add hidden input for tags
 
@@ -162,6 +162,17 @@ export default React.createClass({
     }
   },
 
+  handleDrag: function(tag, currPos, newPos) {
+    var tags = this.state.tags;
+
+    // mutate array
+    tags.splice(currPos, 1);
+    tags.splice(newPos, 0, tag);
+
+    // re-render
+    this.setState({ tags: tags });
+  },
+
   render() {
     return (
       <div>
@@ -183,7 +194,7 @@ export default React.createClass({
             suggestions={this.state.suggestions}
             handleAddition={this.handleAddition}
             handleDelete={this.handleDelete}
-            /><br/>
+            handleDrag={this.handleDrag} /><br/><br/><br/><br/>
           <RaisedButton type="submit" label="Upload" disabled={this.state.disabled} />
         </form>
       </div>
