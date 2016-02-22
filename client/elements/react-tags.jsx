@@ -50,6 +50,11 @@ const CustomTags = React.createClass({
     this.setState({
       suggestions, tags
     });
+    this.updateParent(tags);
+  },
+
+  updateParent(tags) {
+    tags = tags.map(tag => _.find(this.availableTags, x => x.caption == tag.text))
     this.props.onUpdate(tags);
   },
 
@@ -74,21 +79,18 @@ const CustomTags = React.createClass({
         caption: tag
       }, (data) => {
         this.availableTags.push(data);
+        this.updateParent(tags);
       });
     }
 
-    this.props.onUpdate(tags);
   },
 
   handleDrag: function(tag, currPos, newPos) {
-    var tags = this.state.tags;
+    var tags = [].concat(this.state.tags);
 
-    // mutate array
     tags.splice(currPos, 1);
     tags.splice(newPos, 0, tag);
-
-    // re-render
-    this.setState({ tags: tags });
+    this.setState({ tags });
   },
 
   render() {

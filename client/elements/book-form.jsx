@@ -88,6 +88,7 @@ const BookForm = React.createClass({
   },
 
   onTagsUpd(newTags) {
+    console.log(JSON.stringify(newTags))
     this.setState({ tags: newTags });
   },
 
