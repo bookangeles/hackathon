@@ -1,3 +1,5 @@
+# Repository was created during hack.summit hackathon 2016. Code is no loger maintained. Thank you!
+
 # bookangeles
 
 ## Installation
